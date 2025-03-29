@@ -669,18 +669,36 @@ require('lazy').setup({
             'clangd',
             '--clang-tidy',
           },
+          capabilities = {
+            offsetEncoding = { 'utf-16' },
+          },
           on_attach = function(client, bufnr)
-            local navic = require 'nvim-navic'
-            navic.attach(client, bufnr)
+            if client.server_capabilities.documentSymbolProvider then
+              require('nvim-navic').attach(client, bufnr)
+              require('nvim-navbuddy').attach(client, bufnr)
+            end
           end,
         },
+
         cmake = {},
         asm_lsp = {
           cmd = { 'asm-lsp' },
           filetypes = { 'asm', 's', 'S' },
+          on_attach = function(client, bufnr)
+            if client.server_capabilities.documentSymbolProvider then
+              require('nvim-navic').attach(client, bufnr)
+              require('nvim-navbuddy').attach(client, bufnr)
+            end
+          end,
         },
-        -- gopls = {},
-        pyright = {},
+        pyright = {
+          on_attach = function(client, bufnr)
+            if client.server_capabilities.documentSymbolProvider then
+              require('nvim-navic').attach(client, bufnr)
+              require('nvim-navbuddy').attach(client, bufnr)
+            end
+          end,
+        },
         yamlls = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -736,20 +754,11 @@ require('lazy').setup({
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            server.capabilities = vim.tbl_deep_extend('force', {}, server.capabilities or {}, capabilities)
             require('lspconfig')[server_name].setup(server)
           end,
         },
       }
-
-      -- TODO:
-      -- local navic = require 'nvim-navic'
-      --
-      -- require('lspconfig').clangd.setup {
-      --   on_attach = function(client, bufnr)
-      --     navic.attach(client, bufnr)
-      --   end,
-      -- }
     end,
   },
 
@@ -924,9 +933,6 @@ require('lazy').setup({
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'nvim_lsp_signature_help' },
-          {
-            name = 'codeium',
-          },
         },
       }
     end,

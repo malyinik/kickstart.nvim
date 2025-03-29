@@ -1,5 +1,11 @@
 return {
   'SmiteshP/nvim-navic',
   dependencies = { 'neovim/nvim-lspconfig' },
-  config = function() end,
+  config = function()
+    require('nvim-navic').setup {
+      highlight = true,
+      separator = '  ',
+      click = true,
+    }
+  end,
 }
