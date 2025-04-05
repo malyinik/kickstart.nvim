@@ -1,13 +1,15 @@
 return {
   'rlane/pounce.nvim',
   config = function()
-    require('pounce').setup()
+    require('pounce').setup {
+      accept_keys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    }
 
     local map = vim.keymap.set
-    map('n', 's', function()
+    map('n', '<Space>j', function()
       require('pounce').pounce {}
     end)
-    map('n', 'S', function()
+    map('n', '<Space>J', function()
       require('pounce').pounce { do_repeat = true }
     end)
   end,

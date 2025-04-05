@@ -26,8 +26,8 @@ return {
         debounce = 75,
         keymap = {
           accept = '<Tab>',
-          accept_word = false,
-          accept_line = false,
+          accept_word = '<C-Right>',
+          accept_line = '<C-Down>',
           next = '<M-]>',
           prev = '<M-[>',
           dismiss = '<C-]>',

@@ -398,7 +398,11 @@ require('lazy').setup({
         defaults = {
           mappings = {
             -- i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-            n = { ['dd'] = require('telescope.actions').delete_buffer },
+            n = {
+              ['dd'] = require('telescope.actions').delete_buffer,
+              ['s'] = require('telescope.actions').select_vertical,
+              ['S'] = require('telescope.actions').select_horizontal,
+            },
           },
         },
         -- pickers = {}
@@ -426,6 +430,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
       vim.keymap.set('n', '<leader>sm', builtin.marks, { desc = '[S]earch [M]arks' })
+      vim.keymap.set('n', '<leader>sj', builtin.jumplist, { desc = '[S]earch [J]umps' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
