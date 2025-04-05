@@ -36,7 +36,7 @@ return {
         console = 'integratedTerminal',
       },
       cmake_executor = { -- executor to use
-        name = 'quickfix', -- name of the executor
+        name = 'toggleterm', -- name of the executor
         opts = {}, -- the options the executor will get, possible values depend on the executor type. See `default_opts` for possible values.
         default_opts = { -- a list of default and possible values for executors
           quickfix = {
@@ -47,7 +47,7 @@ return {
             auto_close_when_success = true, -- typically, you can use it with the "always" option; it will auto-close the quickfix buffer if the execution is successful.
           },
           toggleterm = {
-            direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+            direction = 'horizontal', -- 'vertical' | 'horizontal' | 'tab' | 'float'
             close_on_exit = false, -- whether close the terminal when exit
             auto_scroll = true, -- whether auto scroll to the bottom
             singleton = true, -- single instance, autocloses the opened one, if present
@@ -85,7 +85,7 @@ return {
         },
       },
       cmake_runner = { -- runner to use
-        name = 'terminal', -- name of the runner
+        name = 'toggleterm', -- name of the runner
         opts = {}, -- the options the runner will get, possible values depend on the runner type. See `default_opts` for possible values.
         default_opts = { -- a list of default and possible values for runners
           quickfix = {
@@ -96,7 +96,7 @@ return {
             auto_close_when_success = true, -- typically, you can use it with the "always" option; it will auto-close the quickfix buffer if the execution is successful.
           },
           toggleterm = {
-            direction = 'float', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+            direction = 'horizontal', -- 'vertical' | 'horizontal' | 'tab' | 'float'
             close_on_exit = false, -- whether close the terminal when exit
             auto_scroll = true, -- whether auto scroll to the bottom
             singleton = true, -- single instance, autocloses the opened one, if present
@@ -106,7 +106,7 @@ return {
               strategy = {
                 'toggleterm',
                 direction = 'horizontal',
-                autos_croll = true,
+                auto_scroll = true,
                 quit_on_exit = 'success',
               },
             }, -- options to pass into the `overseer.new_task` command
@@ -132,10 +132,10 @@ return {
         },
       },
       cmake_notifications = {
-        runner = { enabled = true },
-        executor = { enabled = true },
+        runner = { enabled = false },
+        executor = { enabled = false },
         spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }, -- icons used for progress display
-        refresh_rate_ms = 200, -- how often to iterate icons
+        refresh_rate_ms = 800, -- how often to iterate icons
       },
       cmake_virtual_text_support = true, -- Show the target related to current file using virtual text (at right corner)
     }
