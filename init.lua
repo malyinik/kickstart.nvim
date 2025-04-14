@@ -1119,3 +1119,15 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+if vim.g.neovide then
+  vim.g.neovide_opacity = 0.9
+  vim.g.neovide_normal_opacity = 0.9
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_fullscreen = true
+  vim.g.neovide_cursor_animation_length = 0.25
+
+  vim.keymap.set('n', '<A-CR>', function()
+    vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+  end)
+end
