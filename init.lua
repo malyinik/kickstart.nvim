@@ -191,6 +191,9 @@ vim.keymap.set('i', 'jj', '<Esc>')
 vim.keymap.set('i', 'оо', '<Esc>')
 vim.keymap.set('n', '<leader>x', ':tabclose<CR>')
 
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -733,6 +736,7 @@ require('lazy').setup({
           cmd = {
             'clangd',
             '--clang-tidy',
+            '--log=error',
           },
           capabilities = {
             offsetEncoding = { 'utf-16' },
@@ -749,12 +753,6 @@ require('lazy').setup({
         asm_lsp = {
           cmd = { 'asm-lsp' },
           filetypes = { 'asm', 's', 'S' },
-          on_attach = function(client, bufnr)
-            if client.server_capabilities.documentSymbolProvider then
-              require('nvim-navic').attach(client, bufnr)
-              require('nvim-navbuddy').attach(client, bufnr)
-            end
-          end,
         },
         pyright = {
           on_attach = function(client, bufnr)
@@ -789,6 +787,7 @@ require('lazy').setup({
             },
           },
         },
+        bashls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -820,6 +819,7 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, server.capabilities or {}, capabilities)
+            -- server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
         },
@@ -862,11 +862,14 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        c = { 'clang-format' },
         cpp = { 'clang-format' },
         asm = { 'asmfmt' },
         yaml = { 'yamlfmt' },
+        markdown = { 'prettier' },
+        python = { 'ruff' },
+        cmake = { 'gersemi' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -877,9 +880,14 @@ require('lazy').setup({
           args = { '--style=file:/home/nikita/.clang-format' },
           stdin = true,
         },
-        ['cmake-format'] = {
-          command = 'cmake-format',
-          args = { '--config-files /home/nikita/.cmake-format.yaml' },
+        ['ruff'] = {
+          command = 'ruff',
+          args = { 'format', '-' },
+          stdin = true,
+        },
+        ['gersemi'] = {
+          command = 'gersemi',
+          stdin = true,
         },
       },
     },
@@ -1121,7 +1129,6 @@ require('lazy').setup({
 -- vim: ts=2 sts=2 sw=2 et
 
 if vim.g.neovide then
-  vim.g.neovide_opacity = 0.9
   vim.g.neovide_normal_opacity = 0.9
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_fullscreen = true
