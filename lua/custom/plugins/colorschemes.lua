@@ -20,7 +20,6 @@ return {
           transparent = true, -- Disable setting background
         },
       }
-      -- vim.cmd.colorscheme 'carbonfox'
     end,
   },
   {
@@ -47,15 +46,15 @@ return {
         aggressive_spell = false, -- true | false
       },
     },
-    config = function(_, opts)
-      require('flow').setup(opts)
-      vim.cmd 'colorscheme flow'
-    end,
+    -- config = function(_, opts)
+    --   require('flow').setup(opts)
+    --   vim.cmd 'colorscheme flow'
+    -- end,
   },
   {
     'zootedb0t/citruszest.nvim',
     lazy = false,
-    priority = 1000,
+    -- priority = 1000,
     config = function()
       require('citruszest').setup {
         option = {
@@ -70,8 +69,35 @@ return {
           Constant = { fg = '#FFFFFF', bold = true },
         },
       }
-
-      -- vim.cmd.colorscheme 'citruszest'
     end,
+  },
+  {
+    'qaptoR-nvim/chocolatier.nvim',
+    -- priority = 1000,
+    -- config = true,
+  },
+  {
+    'ellisonleao/gruvbox.nvim',
+    priority = 1000,
+    config = function()
+      require('gruvbox').setup {
+        contrast = 'soft', -- can be "hard", "soft" or empty string
+        transparent_mode = true,
+      }
+
+      vim.cmd.colorscheme 'gruvbox'
+    end,
+  },
+  {
+    'marko-cerovac/material.nvim',
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function() end,
+  },
+  {
+    'bluz71/vim-moonfly-colors',
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function() end,
   },
 }
