@@ -2,6 +2,15 @@ return {
   'Civitasv/cmake-tools.nvim',
   opts = {},
   config = function()
+    local map = vim.keymap.set
+    map('n', '<leader>cb', '<cmd>CMakeBuild<CR>', { desc = '[C]Make [B]uild' })
+    map('n', '<leader>cB', '<cmd>CMakeQuickBuild<CR>', { desc = '[C]Make Quick [B]uild' })
+    map('n', '<leader>cr', '<cmd>CMakeRun<CR>', { desc = '[C]Make [R]un' })
+    map('n', '<leader>cR', '<cmd>CMakeQuickRun<CR>', { desc = '[C]Make Quick [R]un' })
+    map('n', '<leader>cc', '<cmd>CMakeClean<CR>', { desc = '[C]Make [C]lean' })
+    map('n', '<leader>csb', '<cmd>CMakeSelectBuildType<CR>', { desc = '[C]Make [S]elect [B]uild Type' })
+    map('n', '<leader>cst', '<cmd>CMakeSelectBuildTarget<CR>', { desc = '[C]Make [S]elect [T]arget' })
+
     local osys = require 'cmake-tools.osys'
     require('cmake-tools').setup {
       cmake_command = 'cmake', -- this is used to specify cmake command path
