@@ -3,6 +3,7 @@ return {
   event = 'VeryLazy',
   opts = {
     stages = 'slide',
-    timeout = 2000,
+    timeout = 4000,
+    top_down = false,
   },
 }
