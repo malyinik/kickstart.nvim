@@ -2,7 +2,7 @@ return {
   'rlane/pounce.nvim',
   config = function()
     require('pounce').setup {
-      accept_keys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+      accept_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     }
 
     local map = vim.keymap.set
