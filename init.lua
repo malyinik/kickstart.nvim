@@ -763,6 +763,7 @@ require('lazy').setup({
           end,
         },
         yamlls = {},
+        tinymist = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -869,6 +870,7 @@ require('lazy').setup({
         markdown = { 'prettier' },
         python = { 'ruff' },
         cmake = { 'gersemi' },
+        typst = { 'typstyle' },
         -- Conform can also run multiple formatters sequentially
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
@@ -887,6 +889,11 @@ require('lazy').setup({
         },
         ['gersemi'] = {
           command = 'gersemi',
+          stdin = true,
+        },
+        ['typstyle'] = {
+          commant = 'typstyle',
+          args = { '--column', '120', '--tab-width', '4' },
           stdin = true,
         },
       },
@@ -1086,7 +1093,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
