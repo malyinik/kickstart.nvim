@@ -466,6 +466,10 @@ require('lazy').setup({
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
+          layout_config = {
+            width = 0.6,
+            height = 0.5,
+          },
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
 
@@ -641,8 +645,8 @@ require('lazy').setup({
           --  Similar to document symbols, except searches over your entire project.
           map('gW', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Open Workspace Symbols')
 
-          map('gco', require('telescope.builtin').lsp_outgoing_calls, '[G]oto [C]alls [O]utgoing')
-          map('gci', require('telescope.builtin').lsp_incoming_calls, '[G]oto [C]alls [I]ncoming')
+          map('grco', require('telescope.builtin').lsp_outgoing_calls, '[G]oto [C]alls [O]utgoing')
+          map('grci', require('telescope.builtin').lsp_incoming_calls, '[G]oto [C]alls [I]ncoming')
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
