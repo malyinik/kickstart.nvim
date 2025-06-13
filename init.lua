@@ -110,6 +110,10 @@ vim.o.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
 
+-- Enable spellchecking
+vim.o.spell = true
+vim.o.spelllang = 'en_us,ru'
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -1148,5 +1152,17 @@ if vim.g.neovide then
 
   vim.keymap.set('n', '<A-CR>', function()
     vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+  end)
+
+  vim.keymap.set('n', '<C-=>', function()
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.1
+  end)
+
+  vim.keymap.set('n', '<C-->', function()
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1
+  end)
+
+  vim.keymap.set('n', '<C-0>', function()
+    vim.g.neovide_scale_factor = 1.0
   end)
 end
