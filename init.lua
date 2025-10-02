@@ -778,6 +778,8 @@ require('lazy').setup({
           end,
         },
 
+        jdtls = {},
+
         cmake = {},
         asm_lsp = {
           cmd = { 'asm-lsp' },
@@ -893,6 +895,9 @@ require('lazy').setup({
         lua = { 'stylua' },
         c = { 'clang-format' },
         cpp = { 'clang-format' },
+        json = { 'jq' },
+        java = { 'google-java-format' },
+        javascript = { 'prettier' },
         asm = { 'asmfmt' },
         yaml = { 'yamlfmt' },
         markdown = { 'prettier' },
