@@ -93,6 +93,12 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+-- Load local config (machine-specific settings)
+local ok, local_config = pcall(require, 'local_config')
+if not ok then
+  local_config = {}
+end
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -792,7 +798,18 @@ require('lazy').setup({
               require('nvim-navbuddy').attach(client, bufnr)
             end
           end,
+          settings = {
+            python = {
+              pythonPath = local_config.python_path,
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = 'openFilesOnly',
+                useLibraryCodeForTypes = true,
+              },
+            },
+          },
         },
+
         yamlls = {},
         tinymist = {},
         -- rust_analyzer = {},
@@ -820,6 +837,23 @@ require('lazy').setup({
           },
         },
         bashls = {},
+
+        sqls = {
+          cmd = { 'sqls' },
+          settings = {
+            sqls = {
+              connections = local_config.sqls_connection and {
+                {
+                  driver = 'postgresql',
+                  dataSourceName = local_config.sqls_connection,
+                },
+              } or {},
+            },
+          },
+        },
+        -- sqruff = {
+        --   cmd = { 'sqruff', '--config', '~/.config/.sqruff', 'lsp' },
+        -- },
       }
 
       -- Ensure the servers and tools above are installed
@@ -874,7 +908,8 @@ require('lazy').setup({
       },
     },
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
+      log_level = vim.log.levels.DEBUG,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
@@ -904,6 +939,9 @@ require('lazy').setup({
         python = { 'ruff' },
         cmake = { 'gersemi' },
         typst = { 'typstyle' },
+        tex = { 'tex-fmt' },
+        -- sql = { 'pg_format', 'sqruff' },
+        sql = { 'pg_format', 'sleek' },
         -- Conform can also run multiple formatters sequentially
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
@@ -912,7 +950,7 @@ require('lazy').setup({
       formatters = {
         ['clang-format'] = {
           command = 'clang-format',
-          args = { '--style=file:/home/nikita/.clang-format' },
+          args = { '--style=file' },
           stdin = true,
         },
         ['ruff'] = {
@@ -929,6 +967,22 @@ require('lazy').setup({
           args = { '--column', '120', '--tab-width', '4' },
           stdin = true,
         },
+        ['tex-fmt'] = {
+          command = 'tex-fmt',
+          args = local_config.tex_fmt_config and { '--config', local_config.tex_fmt_config, '--stdin' } or { '--stdin' },
+          stdin = true,
+        },
+        ['pg_format'] = {
+          command = 'pg_format',
+          args = { '--format-type', '--no-extra-line' },
+          stdin = true,
+        },
+        -- ['sqruff'] = {
+        --   command = 'sqruff',
+        --   args = { 'fix', '--config', '/home/nikita/.config/.sqruff', '-' },
+        --   exit_codes = { 0, 1 },
+        --   stdin = true,
+        -- },
       },
     },
   },
@@ -1028,7 +1082,7 @@ require('lazy').setup({
       fuzzy = { implementation = 'lua' },
 
       -- Shows a signature help window while you type arguments for a function
-      signature = { enabled = true },
+      signature = { enabled = false },
     },
   },
 
@@ -1150,7 +1204,7 @@ require('lazy').setup({
 -- vim: ts=2 sts=2 sw=2 et
 
 if vim.g.neovide then
-  vim.g.neovide_normal_opacity = 0.9
+  -- vim.g.neovide_normal_opacity = 0.9
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_fullscreen = true
   vim.g.neovide_cursor_animation_length = 0.25
