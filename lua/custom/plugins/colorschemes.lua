@@ -1,7 +1,16 @@
 return {
   {
+    'vague2k/huez.nvim',
+    -- if you want registry related features, uncomment this
+    import = 'huez-manager.import',
+    branch = 'stable',
+    event = 'UIEnter',
+    config = function()
+      require('huez').setup {}
+    end,
+  },
+  {
     'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
@@ -9,7 +18,6 @@ return {
           comments = { italic = false }, -- Disable italics in comments
         },
       }
-      -- vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
   {
@@ -17,7 +25,7 @@ return {
     config = function()
       require('nightfox').setup {
         options = {
-          transparent = true, -- Disable setting background
+          transparent = false, -- Disable setting background
         },
       }
     end,
@@ -25,13 +33,12 @@ return {
   {
     '0xstepit/flow.nvim',
     lazy = false,
-    priority = 1000,
     tag = 'v2.0.1',
     opts = {
       theme = {
         style = 'dark', --  "dark" | "light"
         contrast = 'default', -- "default" | "high"
-        transparent = true, -- true | false
+        transparent = false, -- true | false
       },
       colors = {
         mode = 'default', -- "default" | "dark" | "light"
@@ -46,19 +53,14 @@ return {
         aggressive_spell = false, -- true | false
       },
     },
-    -- config = function(_, opts)
-    --   require('flow').setup(opts)
-    --   vim.cmd 'colorscheme flow'
-    -- end,
   },
   {
     'zootedb0t/citruszest.nvim',
     lazy = false,
-    -- priority = 1000,
     config = function()
       require('citruszest').setup {
         option = {
-          transparent = true, -- Enable/Disable transparency
+          transparent = false, -- Enable/Disable transparency
           bold = false,
           italic = true,
         },
@@ -73,31 +75,28 @@ return {
   },
   {
     'qaptoR-nvim/chocolatier.nvim',
-    -- priority = 1000,
-    -- config = true,
   },
   {
     'ellisonleao/gruvbox.nvim',
-    priority = 1000,
     config = function()
       require('gruvbox').setup {
-        contrast = 'soft', -- can be "hard", "soft" or empty string
-        transparent_mode = true,
+        contrast = 'hard', -- can be "hard", "soft" or empty string
       }
-
-      vim.cmd.colorscheme 'gruvbox'
     end,
   },
   {
     'marko-cerovac/material.nvim',
-    -- lazy = false,
-    -- priority = 1000,
-    -- config = function() end,
   },
   {
     'bluz71/vim-moonfly-colors',
-    -- lazy = false,
-    -- priority = 1000,
-    -- config = function() end,
   },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+  },
+  {
+    'uloco/bluloco.nvim',
+    dependencies = { 'rktjmp/lush.nvim' },
+  },
+  { 'webhooked/kanso.nvim' },
 }
